@@ -32,9 +32,6 @@ O app utiliza uma paleta de cores baseada no **Azul Sereno**, focada em transmit
 
 Este projeto está sendo desenvolvido por:
 
-| Nome                          | GitHub | LinkedIn |
-| **Eduardo Cunha de Rezende**  | [github.com/seu-perfil](https://https://github.com/ecrezzende) | [linkedin.com/in/seu-perfil](https://linkedin.com/in/seu-perfil) |
+Nome: **Eduardo Cunha de Rezende** | Redes Sociais: **@ecrezzende** |
 
 ---
-
-
