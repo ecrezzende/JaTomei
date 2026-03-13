@@ -33,5 +33,3 @@ O app utiliza uma paleta de cores baseada no **Azul Sereno**, focada em transmit
 Este projeto está sendo desenvolvido por:
 
 Nome: **Eduardo Cunha de Rezende** | Redes Sociais: **@ecrezzende** |
-
----

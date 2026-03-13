@@ -1,11 +1,40 @@
 import 'package:flutter/material.dart';
 
 class MedicationsScreen extends StatelessWidget {
-  // No outro arquivo, use HistoryScreen
   const MedicationsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return const Center(child: Text("Tela de Medicamentos"));
+    return Scaffold(
+      backgroundColor: const Color(0xFFF8FAFC),
+      // AppBar é a barra do topo
+      appBar: AppBar(
+        title: const Text("Meus Remédios", 
+          style: TextStyle(fontWeight: FontWeight.bold)),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(Icons.medication_liquid_rounded, 
+                 size: 100, color: Colors.blue.withAlpha(50)),
+            const SizedBox(height: 20),
+            const Text("Nenhum remédio cadastrado.", 
+              style: TextStyle(color: Colors.black54, fontSize: 16)),
+          ],
+        ),
+      ),
+      // O botão de adicionar (+)
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          // Aqui vamos abrir a tela de cadastro em breve!
+          print("Botão de adicionar clicado!");
+        },
+        backgroundColor: const Color(0xFF4A90E2),
+        child: const Icon(Icons.add, color: Colors.white, size: 30),
+      ),
+    );
   }
 }
