@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'add_medication_screen.dart';
 
 class MedicationsScreen extends StatelessWidget {
   const MedicationsScreen({super.key});
@@ -29,8 +30,10 @@ class MedicationsScreen extends StatelessWidget {
       // O botão de adicionar (+)
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          // Aqui vamos abrir a tela de cadastro em breve!
-          print("Botão de adicionar clicado!");
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => const AddMedicationScreen()),
+          );
         },
         backgroundColor: const Color(0xFF4A90E2),
         child: const Icon(Icons.add, color: Colors.white, size: 30),
