@@ -1,23 +1,39 @@
 import 'package:flutter/material.dart';
+import 'package:jatomei/models/medication_model.dart';
 
 class AddMedicationScreen extends StatefulWidget {
-  const AddMedicationScreen({super.key});
+  final Function(Medication) onSave; 
+
+  const AddMedicationScreen({super.key, required this.onSave}); 
 
   @override
   State<AddMedicationScreen> createState() => _AddMedicationScreenState();
 }
 
 class _AddMedicationScreenState extends State<AddMedicationScreen> {
+  // Controladores para capturar o texto digitado
+  final nameController = TextEditingController();
+  final dosageController = TextEditingController();
+  final stockController = TextEditingController();
+
   TimeOfDay selectedTime = TimeOfDay.now();
   bool isContinuous = false;
-  int frequencyHours = 8; // Valor numérico para automação de notificações
-  int durationDays = 7;   // Padrão de 7 dias se não for contínuo
+  int frequencyHours = 8; 
+  int durationDays = 7; 
+
+  @override
+  void dispose() {
+    // Boa prática: limpar os controladores quando fechar a tela
+    nameController.dispose();
+    dosageController.dispose();
+    stockController.dispose();
+    super.dispose();
+  }
 
   Future<void> _selectTime(BuildContext context) async {
     final TimeOfDay? picked = await showTimePicker(
       context: context,
       initialTime: selectedTime,
-      // Habilita tanto o ponteiro quanto a digitação numérica
       initialEntryMode: TimePickerEntryMode.dial, 
     );
     if (picked != null) setState(() => selectedTime = picked);
@@ -45,11 +61,11 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
             
             const SizedBox(height: 25),
             _buildLabel("Nome do Medicamento"),
-            _buildTextField("Ex: Amoxicilina", Icons.medication),
+            _buildTextField("Ex: Amoxicilina", Icons.medication, nameController),
             
             const SizedBox(height: 20),
             _buildLabel("Dosagem"),
-            _buildTextField("Ex: 500mg", Icons.straighten),
+            _buildTextField("Ex: 500mg", Icons.straighten, dosageController),
 
             const SizedBox(height: 20),
             Row(
@@ -82,13 +98,12 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
 
             const SizedBox(height: 20),
             _buildLabel("Estoque Inicial"),
-            _buildTextField("Qtd comprimidos", Icons.inventory),
+            _buildTextField("Qtd comprimidos", Icons.inventory, stockController, isNumber: true),
 
             const SizedBox(height: 20),
-            // Seção de Duração / Uso Contínuo
             Container(
               padding: const EdgeInsets.all(12),
-              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15)),
+              decoration: BoxDecoration(color: Colors.white, borderRadius: BorderRadius.circular(15), border: Border.all(color: Colors.black12)),
               child: Column(
                 children: [
                   SwitchListTile(
@@ -124,7 +139,21 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
               width: double.infinity,
               height: 55,
               child: ElevatedButton(
-                onPressed: () => Navigator.pop(context),
+                onPressed: () {
+                  // MÁGICA: Captura os dados e envia para a lista
+                  final newMed = Medication(
+                    name: nameController.text,
+                    dosage: dosageController.text,
+                    firstDose: selectedTime,
+                    frequencyHours: frequencyHours,
+                    stock: int.tryParse(stockController.text) ?? 0,
+                    isContinuous: isContinuous,
+                    durationDays: isContinuous ? null : durationDays,
+                  );
+
+                  widget.onSave(newMed); // Envia o remédio
+                  Navigator.pop(context); // Fecha o popup
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFF4A90E2),
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
@@ -138,7 +167,6 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
     );
   }
 
-  // Dropdown para garantir que o intervalo seja um número exato
   Widget _buildFrequencyDropdown() {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 12),
@@ -159,7 +187,9 @@ class _AddMedicationScreenState extends State<AddMedicationScreen> {
     child: Text(text, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
   );
 
-  Widget _buildTextField(String hint, IconData icon) => TextField(
+  Widget _buildTextField(String hint, IconData icon, TextEditingController controller, {bool isNumber = false}) => TextField(
+    controller: controller,
+    keyboardType: isNumber ? TextInputType.number : TextInputType.text,
     decoration: InputDecoration(
       hintText: hint,
       prefixIcon: Icon(icon, color: const Color(0xFF4A90E2), size: 20),

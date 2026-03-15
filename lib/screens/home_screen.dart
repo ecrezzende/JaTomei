@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'medications_screen.dart';
-import 'history_screen.dart';
+import 'package:jatomei/screens/medications_screen.dart';
+import 'package:jatomei/screens/history_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});

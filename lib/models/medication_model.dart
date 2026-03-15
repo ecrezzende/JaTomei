@@ -1,23 +1,21 @@
-enum Frequency { daily, weekly, interval }
+import 'package:flutter/material.dart';
 
 class Medication {
-  final String id;
   final String name;
   final String dosage;
-  final DateTime time;
-  final Frequency frequency;
-  final int totalPills;
-  final int remainingPills;
-  final bool isTaken; // Novo: para o checklist do dashboard
+  final TimeOfDay firstDose;
+  final int frequencyHours;
+  final int? durationDays; // Pode ser nulo se for uso contínuo
+  final int stock;
+  final bool isContinuous;
 
   Medication({
-    required this.id,
     required this.name,
     required this.dosage,
-    required this.time,
-    required this.frequency,
-    this.totalPills = 0,
-    this.remainingPills = 0,
-    this.isTaken = false,
+    required this.firstDose,
+    required this.frequencyHours,
+    this.durationDays,
+    required this.stock,
+    required this.isContinuous,
   });
 }
