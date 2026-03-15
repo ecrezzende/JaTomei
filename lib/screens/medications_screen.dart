@@ -30,9 +30,11 @@ class MedicationsScreen extends StatelessWidget {
       // O botão de adicionar (+)
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const AddMedicationScreen()),
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true, // Permite que o popup suba com o teclado
+             backgroundColor: Colors.transparent,
+             builder: (context) => const AddMedicationScreen(),
           );
         },
         backgroundColor: const Color(0xFF4A90E2),
