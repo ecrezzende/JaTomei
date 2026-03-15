@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart'; // Importante para o relógio
 import 'package:jatomei/screens/home_screen.dart';
-// Importaremos as telas aqui em breve
 
 void main() {
   runApp(const JaTomeiApp());
@@ -14,14 +14,25 @@ class JaTomeiApp extends StatelessWidget {
     return MaterialApp(
       title: 'Já Tomei?!',
       debugShowCheckedModeBanner: false,
+      
+      // CONFIGURAÇÃO DE IDIOMA (Resolve o problema do teclado no relógio)
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: const [
+        Locale('pt', 'BR'), // Define o idioma como Português do Brasil
+      ],
+      locale: const Locale('pt', 'BR'), // Força o app a usar PT-BR
+
       theme: ThemeData(
         useMaterial3: true,
         colorScheme: ColorScheme.fromSeed(
-          seedColor: const Color(0xFF4A90E2), // Azul Moderno
+          seedColor: const Color(0xFF4A90E2),
           primary: const Color(0xFF4A90E2),
-          surface: const Color(0xFFF8FAFC), // Fundo quase branco (Premium)
+          surface: const Color(0xFFF8FAFC),
         ),
-        // Estilo dos cards que vamos usar muito
         cardTheme: CardThemeData(
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -30,17 +41,7 @@ class JaTomeiApp extends StatelessWidget {
           color: Colors.white,
         ),
       ),
-      home: const HomeScreen(), // Remova o PlaceholderHome
+      home: const HomeScreen(),
     );
-  }
-}
-
-// Tela temporária só para o app rodar agora
-class PlaceholderHome extends StatelessWidget {
-  const PlaceholderHome({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Dashboard vindo aí...')));
   }
 }

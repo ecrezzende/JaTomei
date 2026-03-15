@@ -48,12 +48,12 @@ class _MedicationsScreenState extends State<MedicationsScreen> {
               },
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showModalBottomSheet(
+          onPressed: () {
+            showModalBottomSheet(
             context: context,
-            isScrollControlled: true,
+            isScrollControlled: true, // Mantém isso para o teclado não cobrir o popup
             backgroundColor: Colors.transparent,
-            builder: (context) => AddMedicationScreen(onSave: _addNewMedication), // Passamos a função de salvar
+            builder: (context) => AddMedicationScreen(onSave: _addNewMedication),
           );
         },
         backgroundColor: const Color(0xFF4A90E2),
